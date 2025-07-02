@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "254288092317",
+    "project_id": "wordivate-c51e7",
+    "storage_bucket": "wordivate-c51e7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254288092317:android:da8697ceda9ff8e3438874",
+        "android_client_info": {
+          "package_name": "com.example.wordivate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254288092317-d002p360ik7vsu5urk3stmacemq037an.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wordivate",
+            "certificate_hash": "929e7097cf61ad157f829a051952be6f97544b2f"
+          }
+        },
+        {
+          "client_id": "254288092317-ek948718j1vkpt6tp5mmac42508vfqta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3TlnU9Lc4XEJOcxm_y3GB5-xEorSlRkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254288092317-ek948718j1vkpt6tp5mmac42508vfqta.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "254288092317-qk56nk73mheap7234v00m6a0sufnikts.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wordivate"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
