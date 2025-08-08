@@ -2,12 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/core/services/api_service.dart';
 import 'package:wordivate/models/word_model.dart';
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
 import 'package:wordivate/core/services/storage_service.dart';
-import 'package:wordivate/providers/storageServiceProvider.dart';
+import 'package:wordivate/providers/storage_service_provider.dart';
+import 'package:wordivate/core/utils/logger.dart';
+import 'package:wordivate/core/constants/app_constants.dart';
 import 'dart:convert';
 
-// Define our state class
+/// State class for managing words in the application
+/// Contains lists of words, favorites, current word, loading state, and error state
 class WordsState {
   final List<Word> words;
   final List<Word> favoriteWords;
@@ -23,12 +26,12 @@ class WordsState {
     this.error,
   });
   
-  // Factory method to create initial state
+  /// Factory method to create initial state
   static WordsState initial() {
     return const WordsState();
   }
 
-  // Create a copy of the state with new values
+  /// Create a copy of the state with new values
   WordsState copyWith({
     List<Word>? words,
     List<Word>? favoriteWords,
@@ -91,7 +94,7 @@ class WordsNotifier extends StateNotifier<WordsState> {
       rethrow;
     }
   }
-  // Update a word's category
+  /// Update a word's category
 void updateWordCategory(String wordId, String newCategory) {
   final updatedWords = [...state.words];
   final wordIndex = updatedWords.indexWhere((w) => w.id == wordId);
@@ -107,7 +110,7 @@ void updateWordCategory(String wordId, String newCategory) {
     saveWords();
   }
 }
-// Save a word from text and response
+/// Save a word from text and response
 Future<void> saveWord([String? text, WordResponse? response, String? customCategory]) async {
   if (text == null || response == null) return;
   
@@ -117,7 +120,7 @@ Future<void> saveWord([String? text, WordResponse? response, String? customCateg
     text: text,
     definitions: [response.definition],
     examples: response.example.isNotEmpty ? [response.example] : [],
-    category: customCategory ?? response.suggestedCategory ?? 'General',
+    category: customCategory ?? response.suggestedCategory ?? AppConstants.defaultCategory,
     timestamp: DateTime.now(),
   );
   
@@ -126,14 +129,14 @@ Future<void> saveWord([String? text, WordResponse? response, String? customCateg
   await saveWords();
 }
 
-// Delete a word by ID
+/// Delete a word by ID
 void deleteWord(String wordId) {
   final updatedWords = state.words.where((word) => word.id != wordId).toList();
   state = state.copyWith(words: updatedWords);
   saveWords();
 }
 
-// Get all unique categories from words
+/// Get all unique categories from words
 List<String> getAllCategories() {
   final Set<String> categories = {};
   for (final word in state.words) {
@@ -143,71 +146,72 @@ List<String> getAllCategories() {
   }
   return categories.toList()..sort();
 }
-  // Toggle favorite status of a word
-  void toggleFavorite(String wordId) {
-    final updatedWords = [...state.words];
-    final wordIndex = updatedWords.indexWhere((w) => w.id == wordId);
+
+/// Toggle favorite status of a word
+void toggleFavorite(String wordId) {
+  final updatedWords = [...state.words];
+  final wordIndex = updatedWords.indexWhere((w) => w.id == wordId);
+  
+  if (wordIndex != -1) {
+    // Toggle the isFavorite status
+    updatedWords[wordIndex] = updatedWords[wordIndex].copyWith(
+      isFavorite: !updatedWords[wordIndex].isFavorite,
+    );
     
-    if (wordIndex != -1) {
-      // Toggle the isFavorite status
-      updatedWords[wordIndex] = updatedWords[wordIndex].copyWith(
-        isFavorite: !updatedWords[wordIndex].isFavorite,
-      );
-      
-      // Update favorite words list
-      final updatedFavorites = updatedWords
-          .where((word) => word.isFavorite)
-          .toList();
-      
-      state = state.copyWith(
-        words: updatedWords,
-        favoriteWords: updatedFavorites,
-      );
-      
-      // Persist changes
-      saveWords();
-    }
+    // Update favorite words list
+    final updatedFavorites = updatedWords
+        .where((word) => word.isFavorite)
+        .toList();
+    
+    state = state.copyWith(
+      words: updatedWords,
+      favoriteWords: updatedFavorites,
+    );
+    
+    // Persist changes
+    saveWords();
   }
+}
   Future<void> loadWords() async {
-    print('📚 Loading words from storage');
+    AppLogger.info('Loading words from storage');
     if (!_storage.isInitialized) await _storage.initialize();
     
-    final wordsJson = _storage.read('saved_words');
+    final wordsJson = _storage.read(StorageKeys.savedWords);
     if (wordsJson != null && wordsJson is String && wordsJson.isNotEmpty) {
       try {
         final List<dynamic> decodedList = jsonDecode(wordsJson);
         final words = decodedList.map((json) => Word.fromJson(json)).toList();
         state = state.copyWith(words: words);
-        print('📚 Loaded ${words.length} words from storage');
+        AppLogger.info('Loaded ${words.length} words from storage');
       } catch (e) {
-        print('⚠️ Error parsing saved words: $e');
+        AppLogger.error('Error parsing saved words', e);
+        state = state.copyWith(error: 'Failed to load saved words');
       }
     } else {
-      print('📚 No saved words found in storage');
+      AppLogger.info('No saved words found in storage');
     }
   }
   
-  // Update saveWords method to persist changes
+  /// Save words to storage with proper error handling
   Future<void> saveWords() async {
     try {
       final wordsJson = jsonEncode(state.words.map((w) => w.toJson()).toList());
-      await _storage.saveString('saved_words', wordsJson);
-      print('💾 Saved ${state.words.length} words to storage');
+      await _storage.saveString(StorageKeys.savedWords, wordsJson);
+      AppLogger.info('Saved ${state.words.length} words to storage');
     } catch (e) {
-      print('⚠️ Error saving words: $e');
+      AppLogger.error('Error saving words', e);
+      state = state.copyWith(error: 'Failed to save words');
     }
   }
   
-  // Make sure all methods that modify words call saveWords()
+  /// Add a word to the collection
   void addWord(Word word) {
     state = state.copyWith(words: [...state.words, word]);
     saveWords(); // Persist after every change
   }
-  
-  // Same for other methods that modify state
 }
 
-// Provide easy access to filtered words
+/// Provider for easy access to filtered words by category
 final wordsByCategoryProvider = Provider.family<List<Word>, String>((
   ref,
   category,
@@ -217,7 +221,7 @@ final wordsByCategoryProvider = Provider.family<List<Word>, String>((
   return words.where((word) => word.category == category).toList();
 });
 
-// Provide search functionality
+/// Provider for search functionality
 final searchResultsProvider = Provider.family<List<Word>, String>((ref, query) {
   final words = ref.watch(wordsProvider).words;
   if (query.isEmpty) return words;
@@ -234,6 +238,3 @@ final searchResultsProvider = Provider.family<List<Word>, String>((ref, query) {
       )
       .toList();
 });
-
-// Remove the duplicate WordListState class, WordListNotifier class and wordListProvider
-// that were added at the end of this file, since they already exist in wordlistprovider.dart

@@ -5,7 +5,7 @@ import 'package:wordivate/core/constants/app_colors.dart';
 import 'package:wordivate/models/categorymodel.dart';
 import 'package:wordivate/models/word_model.dart';
 import 'package:wordivate/providers/word_provider.dart';
-import 'package:wordivate/providers/categoryprovider.dart';
+import 'package:wordivate/providers/category_provider.dart';
 import 'package:wordivate/views/components/word_card.dart';
 import 'package:wordivate/views/categories/availablewordsScreen.dart';
 import 'package:wordivate/core/constants/text_styles.dart';

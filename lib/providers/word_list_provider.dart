@@ -1,10 +1,13 @@
-// lib/providers/wordlistprovider.dart
+/// State management for word list filtering and selection
+/// This provider handles the display and interaction states for word lists
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/models/word_model.dart';
 import 'package:wordivate/providers/word_provider.dart';
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
+import 'package:wordivate/core/constants/app_constants.dart';
 
-// Define our state class for word list
+/// State class for word list management
+/// Contains filtered words, current filter, selection mode, and selected items
 class WordListState {
   final List<Word> filteredWords;
   final String filter;
@@ -22,7 +25,7 @@ class WordListState {
     this.error,
   });
 
-  // Create a copy of the state with new values
+  /// Create a copy of the state with new values
   WordListState copyWith({
     List<Word>? filteredWords,
     String? filter,

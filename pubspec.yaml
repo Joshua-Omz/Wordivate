@@ -38,13 +38,10 @@ dependencies:
   hive_flutter: ^1.1.0
   flutter_riverpod: ^2.6.1
   riverpod_annotation: ^2.6.1
-  animated_text_kit: ^4.2.3
-  genai: ^0.0.1-dev.1
-  generative_ai_dart: ^0.1.2
-  intl: ^0.20.2
   google_generative_ai: ^0.4.7
+  intl: ^0.20.2
   shared_preferences: ^2.5.3
-  # Removed Firebase dependencies
+  # Firebase dependencies
   firebase_core: ^2.15.1
   firebase_auth: ^4.7.3
   cloud_firestore: ^4.8.0
@@ -63,7 +60,6 @@ dev_dependencies:
   riverpod_generator: ^2.6.5
   flutter_launcher_icons: ^0.14.3
   flutter_lints: ^5.0.0
-  smooth_page_indicator: ^1.2.1
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -90,8 +86,6 @@ flutter:
     - assets/wordivateblack.png
     - assets/wordivate_logo2.png
     - assets/wordivateonboard.png
-    - assets/wordivateblack.png
-   # - assets/absolute_logo.png  # Add this line for the absolute logo
     
   #   - images/a_dot_ham.jpeg
 
@@ -126,16 +120,16 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/wordivateblack.png"
   adaptive_icon_background: "#FFFFFF" # White background for adaptive icons
-  adaptive_icon_foreground: "assets/wordivate logo2.png" # Foreground image for adaptive icons
+  adaptive_icon_foreground: "assets/wordivate_logo2.png" # Foreground image for adaptive icons
   web:
     generate: true
-    image_path: "assets/wordivate logo.png"
+    image_path: "assets/wordivate_logo2.png"
   windows:
     generate: true
-    image_path: "assets/wordivate logo.png"
+    image_path: "assets/wordivate_logo2.png"
   macos:
     generate: true
-    image_path: "assets/wordivate logo.png"
+    image_path: "assets/wordivate_logo2.png"
 
 # Add Flutter Native Splash configuration
 flutter_native_splash:

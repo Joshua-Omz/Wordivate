@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/core/services/firebaseService.dart';
-import 'package:wordivate/providers/storageServiceProvider.dart';
+import 'package:wordivate/providers/storage_service_provider.dart';
 import 'package:wordivate/views/auth/login.dart';
 import 'package:wordivate/views/auth/register.dart';
 import 'package:wordivate/views/splash/splash_screen.dart';

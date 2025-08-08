@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordivate/screens/branding_screen.dart';
+import 'package:wordivate/views/startup/branding_screen.dart';
 import 'package:wordivate/views/auth/authgate.dart';
 
 import 'package:wordivate/views/home/chatscreen.dart';

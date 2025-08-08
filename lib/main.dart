@@ -11,21 +11,18 @@ import 'firebase_options.dart';
 // Import local files
 import 'package:wordivate/core/constants/app_colors.dart';
 import 'package:wordivate/views/categories/wordlistscreen.dart';
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
 import 'package:wordivate/views/splash/splash_screen.dart';
 import 'package:wordivate/views/home/chatscreen.dart';
 import 'package:wordivate/providers/word_provider.dart';
 import 'package:wordivate/core/services/storage_service.dart';
 import 'package:wordivate/views/categories/category_screen.dart';
 import 'package:wordivate/views/settings/settings_screen.dart';
-import 'package:wordivate/providers/storageServiceProvider.dart';
+import 'package:wordivate/providers/storage_service_provider.dart';
 import 'package:wordivate/views/auth/authgate.dart';
+import 'package:wordivate/views/startup/app_startup.dart';
 import 'package:wordivate/providers/navigation_provider.dart';
-import 'package:wordivate/screens/branding_screen.dart';
-import 'package:wordivate/views/auth/authgate.dart';  
-import 'package:wordivate/screens/app_startup.dart';
-// Remove or use this import:
-// import 'package:wordivate/views/main_navigation_screen.dart';
+import 'package:wordivate/core/utils/logger.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,7 +67,7 @@ Future<StorageService> initializeStorage() async {
   final storageService = StorageService();
   await storageService.initialize();
   final isFirstLaunch = await storageService.isFirstLaunch();
-  print('🚀 App first launch: $isFirstLaunch');
+  AppLogger.info('App first launch: $isFirstLaunch');
   return storageService;
 }
 
