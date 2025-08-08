@@ -2,7 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/models/word_model.dart';
 import 'package:wordivate/providers/word_provider.dart';
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
 
 // Define our state class for word list
 class WordListState {

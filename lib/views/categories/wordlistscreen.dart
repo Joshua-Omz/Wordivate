@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/core/constants/app_colors.dart';
 import 'package:wordivate/providers/word_provider.dart';
-import 'package:wordivate/providers/wordlistprovider.dart';
+import 'package:wordivate/providers/word_list_provider.dart';
 import 'package:wordivate/views/components/word_card.dart';
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
 
 // Renamed class to follow Flutter naming conventions
 class WordListScreen extends ConsumerStatefulWidget {

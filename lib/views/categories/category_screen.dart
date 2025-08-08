@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/core/constants/app_colors.dart';
 import 'package:wordivate/models/categorymodel.dart';
-import 'package:wordivate/providers/categoryprovider.dart';
+import 'package:wordivate/providers/category_provider.dart';
 import 'package:wordivate/providers/word_provider.dart';
 import 'package:wordivate/views/categories/wordlistscreen.dart';
 import 'package:wordivate/views/components/app_drawer.dart';

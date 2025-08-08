@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/core/constants/app_colors.dart';
 import 'package:wordivate/models/word_model.dart';
 import 'package:intl/intl.dart';
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
 import 'package:wordivate/models/categorymodel.dart';
-import 'package:wordivate/providers/categoryprovider.dart';
+import 'package:wordivate/providers/category_provider.dart';
 
 
 class WordCard extends ConsumerStatefulWidget {

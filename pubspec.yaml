@@ -90,8 +90,6 @@ flutter:
     - assets/wordivateblack.png
     - assets/wordivate_logo2.png
     - assets/wordivateonboard.png
-    - assets/wordivateblack.png
-   # - assets/absolute_logo.png  # Add this line for the absolute logo
     
   #   - images/a_dot_ham.jpeg
 
@@ -126,16 +124,16 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/wordivateblack.png"
   adaptive_icon_background: "#FFFFFF" # White background for adaptive icons
-  adaptive_icon_foreground: "assets/wordivate logo2.png" # Foreground image for adaptive icons
+  adaptive_icon_foreground: "assets/wordivate_logo2.png" # Foreground image for adaptive icons
   web:
     generate: true
-    image_path: "assets/wordivate logo.png"
+    image_path: "assets/wordivate_logo2.png"
   windows:
     generate: true
-    image_path: "assets/wordivate logo.png"
+    image_path: "assets/wordivate_logo2.png"
   macos:
     generate: true
-    image_path: "assets/wordivate logo.png"
+    image_path: "assets/wordivate_logo2.png"
 
 # Add Flutter Native Splash configuration
 flutter_native_splash:

@@ -2,12 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordivate/core/services/api_service.dart';
 import 'package:wordivate/models/word_model.dart';
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
 import 'package:wordivate/core/services/storage_service.dart';
-import 'package:wordivate/providers/storageServiceProvider.dart';
+import 'package:wordivate/providers/storage_service_provider.dart';
+import 'package:wordivate/core/utils/logger.dart';
 import 'dart:convert';
 
-// Define our state class
+/// State class for managing words in the application
+/// Contains lists of words, favorites, current word, loading state, and error state
 class WordsState {
   final List<Word> words;
   final List<Word> favoriteWords;
@@ -23,12 +25,12 @@ class WordsState {
     this.error,
   });
   
-  // Factory method to create initial state
+  /// Factory method to create initial state
   static WordsState initial() {
     return const WordsState();
   }
 
-  // Create a copy of the state with new values
+  /// Create a copy of the state with new values
   WordsState copyWith({
     List<Word>? words,
     List<Word>? favoriteWords,
@@ -169,7 +171,7 @@ List<String> getAllCategories() {
     }
   }
   Future<void> loadWords() async {
-    print('📚 Loading words from storage');
+    AppLogger.info('Loading words from storage');
     if (!_storage.isInitialized) await _storage.initialize();
     
     final wordsJson = _storage.read('saved_words');
@@ -178,23 +180,25 @@ List<String> getAllCategories() {
         final List<dynamic> decodedList = jsonDecode(wordsJson);
         final words = decodedList.map((json) => Word.fromJson(json)).toList();
         state = state.copyWith(words: words);
-        print('📚 Loaded ${words.length} words from storage');
+        AppLogger.info('Loaded ${words.length} words from storage');
       } catch (e) {
-        print('⚠️ Error parsing saved words: $e');
+        AppLogger.error('Error parsing saved words', e);
+        state = state.copyWith(error: 'Failed to load saved words');
       }
     } else {
-      print('📚 No saved words found in storage');
+      AppLogger.info('No saved words found in storage');
     }
   }
   
-  // Update saveWords method to persist changes
+  /// Save words to storage with proper error handling
   Future<void> saveWords() async {
     try {
       final wordsJson = jsonEncode(state.words.map((w) => w.toJson()).toList());
       await _storage.saveString('saved_words', wordsJson);
-      print('💾 Saved ${state.words.length} words to storage');
+      AppLogger.info('Saved ${state.words.length} words to storage');
     } catch (e) {
-      print('⚠️ Error saving words: $e');
+      AppLogger.error('Error saving words', e);
+      state = state.copyWith(error: 'Failed to save words');
     }
   }
   

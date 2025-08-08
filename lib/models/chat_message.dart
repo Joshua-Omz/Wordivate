@@ -1,4 +1,4 @@
-import 'package:wordivate/models/wordrespons.dart';
+import 'package:wordivate/models/word_response.dart';
 import 'dart:convert';
 
 /// Enum defining the type of message sender
